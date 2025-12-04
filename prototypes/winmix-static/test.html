@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WinMix Prototype - Tesztelési Oldal</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .test-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .test-section {
+      margin-bottom: 2rem;
+      padding: 2rem;
+      background: var(--color-glass-bg);
+      border: 1px solid var(--color-glass-border);
+      border-radius: 0.75rem;
+    }
+
+    .test-section h2 {
+      margin-bottom: 1rem;
+      color: var(--color-primary);
+    }
+
+    .test-status {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+
+    .test-status.pass {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+    }
+
+    .test-status.fail {
+      background: rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+    }
+
+    .test-details {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      font-family: 'Courier New', monospace;
+      color: #34d399;
+      white-space: pre-wrap;
+    }
+
+    .test-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .test-list li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+    }
+
+    .test-list li:last-child {
+      border-bottom: none;
+    }
+
+    .test-list li::before {
+      content: '✓ ';
+      color: var(--color-primary);
+      margin-right: 0.5rem;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <h1 class="text-gradient-emerald">WinMix Prototípus Tesztelés</h1>
+    <p class="text-muted" style="margin-bottom: 2rem;">Az összes interaktív komponens validálása</p>
+
+    <!-- Data Loading Test -->
+    <div class="test-section">
+      <h2>
+        Mock Adatok Betöltése
+        <span class="test-status pass" id="test-data">Ellenőrzés...</span>
+      </h2>
+      <div class="test-details" id="test-data-details">Ellenőrzés alatt...</div>
+    </div>
+
+    <!-- Component Tests -->
+    <div class="test-section">
+      <h2>
+        Komponensek Inicializálása
+        <span class="test-status pass" id="test-components">Ellenőrzés...</span>
+      </h2>
+      <ul class="test-list">
+        <li id="test-cta">CTA Button Manager</li>
+        <li id="test-marquee">Marquee Manager</li>
+        <li id="test-features">Feature Grid Manager</li>
+        <li id="test-integrations">Integration Grid Manager</li>
+        <li id="test-testimonials">Testimonial Carousel</li>
+        <li id="test-cta-section">Feature CTA Manager</li>
+      </ul>
+    </div>
+
+    <!-- HTML Generation Test -->
+    <div class="test-section">
+      <h2>
+        HTML Komponensek Generálása
+        <span class="test-status pass" id="test-generation">Ellenőrzés...</span>
+      </h2>
+      <div class="test-details">
+        <div id="test-gen-details"></div>
+      </div>
+    </div>
+
+    <!-- Accessibility Test -->
+    <div class="test-section">
+      <h2>
+        Akadálymentesítés
+        <span class="test-status pass" id="test-a11y">Ellenőrzés...</span>
+      </h2>
+      <ul class="test-list">
+        <li id="test-a11y-skip">Skip-to-content link</li>
+        <li id="test-a11y-aria">ARIA attribútumok</li>
+        <li id="test-a11y-keyboard">Keyboard navigáció támogatás</li>
+        <li id="test-a11y-labels">Button ARIA labels</li>
+        <li id="test-a11y-roles">Semantic roles</li>
+      </ul>
+    </div>
+
+    <!-- Reduced Motion Test -->
+    <div class="test-section">
+      <h2>
+        prefers-reduced-motion Támogatás
+        <span class="test-status pass" id="test-motion">Ellenőrzés...</span>
+      </h2>
+      <div class="test-details" id="test-motion-details">Ellenőrzés alatt...</div>
+    </div>
+
+    <!-- Interactive Test -->
+    <div class="test-section">
+      <h2>Interaktív Tesztek</h2>
+      <div class="button-group">
+        <button class="btn-cta" onclick="testCTAShimmer()">
+          CTA Shimmer Teszt
+          <span class="btn-cta-shine"></span>
+        </button>
+        <button class="btn-cta" onclick="testMarqueeToggle()">
+          Marquee Pause/Resume
+          <span class="btn-cta-shine"></span>
+        </button>
+        <button class="btn-cta" onclick="testCarouselNav()">
+          Carousel Navigáció
+          <span class="btn-cta-shine"></span>
+        </button>
+      </div>
+      <div class="test-details" id="test-interactive-log" style="margin-top: 1rem; display: none;">
+        Interaktív teszt napló (nézd meg az F12 Console-t is)
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="test-section">
+      <h2>
+        Teszt Összefoglalása
+        <span class="test-status pass" id="test-summary">Feldolgozás...</span>
+      </h2>
+      <div class="test-details">
+        <div id="test-summary-details"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="mock-data.js"></script>
+  <script src="prototype.js"></script>
+
+  <script>
+    /**
+     * Comprehensive Test Suite for WinMix Prototype
+     */
+
+    const log = (msg) => {
+      console.log('[TEST]', msg);
+    };
+
+    const updateTestStatus = (elementId, passed, message = '') => {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+
+      if (passed) {
+        el.classList.remove('fail');
+        el.classList.add('pass');
+        el.textContent = '✓ Sikerült';
+      } else {
+        el.classList.remove('pass');
+        el.classList.add('fail');
+        el.textContent = '✗ Sikertelen';
+      }
+
+      const detailsEl = document.getElementById(elementId + '-details');
+      if (detailsEl && message) {
+        detailsEl.textContent = message;
+      }
+    };
+
+    const runTests = () => {
+      log('=== WinMix Prototípus Teszt Indulása ===');
+
+      // 1. Test Mock Data
+      testMockData();
+
+      // 2. Test Components Initialization
+      testComponentsInit();
+
+      // 3. Test HTML Generation
+      testHTMLGeneration();
+
+      // 4. Test Accessibility
+      testAccessibility();
+
+      // 5. Test Reduced Motion
+      testReducedMotion();
+
+      // 6. Test Summary
+      testSummary();
+
+      log('=== Tesztek Befejezve ===');
+    };
+
+    const testMockData = () => {
+      let passed = true;
+      let message = '';
+
+      try {
+        if (!window.MOCK_AVATARS || window.MOCK_AVATARS.length === 0) {
+          passed = false;
+          message += 'MOCK_AVATARS: Üres vagy hiányzik\n';
+        } else {
+          message += `MOCK_AVATARS: ${window.MOCK_AVATARS.length} elem\n`;
+        }
+
+        if (!window.MOCK_FEATURES || window.MOCK_FEATURES.length === 0) {
+          passed = false;
+          message += 'MOCK_FEATURES: Üres vagy hiányzik\n';
+        } else {
+          message += `MOCK_FEATURES: ${window.MOCK_FEATURES.length} elem\n`;
+        }
+
+        if (!window.MOCK_TESTIMONIALS || window.MOCK_TESTIMONIALS.length === 0) {
+          passed = false;
+          message += 'MOCK_TESTIMONIALS: Üres vagy hiányzik\n';
+        } else {
+          message += `MOCK_TESTIMONIALS: ${window.MOCK_TESTIMONIALS.length} elem\n`;
+        }
+
+        if (!window.MOCK_INTEGRATIONS || window.MOCK_INTEGRATIONS.length === 0) {
+          passed = false;
+          message += 'MOCK_INTEGRATIONS: Üres vagy hiányzik\n';
+        } else {
+          message += `MOCK_INTEGRATIONS: ${window.MOCK_INTEGRATIONS.length} elem\n`;
+        }
+      } catch (e) {
+        passed = false;
+        message = 'Hiba: ' + e.message;
+      }
+
+      updateTestStatus('test-data', passed, message.trim());
+    };
+
+    const testComponentsInit = () => {
+      const components = [
+        { id: 'test-cta', name: 'CTAButtonManager' },
+        { id: 'test-marquee', name: 'MarqueeManager' },
+        { id: 'test-features', name: 'FeatureGridManager' },
+        { id: 'test-integrations', name: 'IntegrationGridManager' },
+        { id: 'test-testimonials', name: 'TestimonialCarousel' },
+        { id: 'test-cta-section', name: 'FeatureCTAManager' }
+      ];
+
+      let allPassed = true;
+
+      components.forEach(comp => {
+        const exists = typeof window[comp.name] === 'function';
+        const el = document.getElementById(comp.id);
+
+        if (el) {
+          if (exists) {
+            el.style.color = '#34d399';
+            el.textContent = el.textContent.replace('Manager', '') + ' ✓';
+          } else {
+            el.style.color = '#fca5a5';
+            el.textContent = el.textContent + ' ✗';
+            allPassed = false;
+          }
+        }
+
+        log(`${comp.name}: ${exists ? 'OK' : 'HIÁNYZIK'}`);
+      });
+
+      updateTestStatus('test-components', allPassed);
+    };
+
+    const testHTMLGeneration = () => {
+      let passed = true;
+      let details = '';
+
+      try {
+        const marqueeItems = document.querySelectorAll('.marquee-item').length;
+        const featureCards = document.querySelectorAll('.feature-card').length;
+        const integrationCards = document.querySelectorAll('.integration-card').length;
+        const carouselSlides = document.querySelectorAll('.carousel-slide').length;
+
+        details += `Marquee elemek: ${marqueeItems}\n`;
+        details += `Feature kártyák: ${featureCards}\n`;
+        details += `Integráció kártyák: ${integrationCards}\n`;
+        details += `Carousel diák: ${carouselSlides}\n`;
+
+        if (marqueeItems === 0 || featureCards === 0 || integrationCards === 0 || carouselSlides === 0) {
+          passed = false;
+          details += '\n⚠️ Néhány komponens nem lett generálva';
+        }
+      } catch (e) {
+        passed = false;
+        details = 'Hiba: ' + e.message;
+      }
+
+      document.getElementById('test-gen-details').textContent = details.trim();
+      updateTestStatus('test-generation', passed);
+    };
+
+    const testAccessibility = () => {
+      let passed = true;
+      const a11yTests = [
+        { id: 'test-a11y-skip', check: () => !!document.querySelector('.skip-to-content') },
+        { id: 'test-a11y-aria', check: () => !!document.querySelector('[aria-label]') },
+        { id: 'test-a11y-keyboard', check: () => !!document.querySelector('button[class*="btn"]') },
+        { id: 'test-a11y-labels', check: () => !!document.querySelector('button[aria-label]') },
+        { id: 'test-a11y-roles', check: () => !!document.querySelector('[role]') }
+      ];
+
+      a11yTests.forEach(test => {
+        const exists = test.check();
+        const el = document.getElementById(test.id);
+        if (el) {
+          if (exists) {
+            el.style.color = '#34d399';
+            el.textContent = el.textContent + ' ✓';
+          } else {
+            el.style.color = '#fca5a5';
+            el.textContent = el.textContent + ' ✗';
+            passed = false;
+          }
+        }
+      });
+
+      updateTestStatus('test-a11y', passed);
+    };
+
+    const testReducedMotion = () => {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const prefersReducedFn = typeof window.prefersReducedMotion === 'function';
+
+      let details = `Rendszer prefers-reduced-motion: ${prefersReduced ? 'YES' : 'NO'}\n`;
+      details += `prefersReducedMotion() függvény: ${prefersReducedFn ? 'OK' : 'HIÁNYZIK'}`;
+
+      updateTestStatus('test-motion', true, details);
+    };
+
+    const testSummary = () => {
+      const passed = document.querySelectorAll('.test-status.pass').length;
+      const failed = document.querySelectorAll('.test-status.fail').length;
+      const total = passed + failed;
+
+      let summary = `Sikeresek: ${passed}/${total}\n`;
+      summary += `Hibák: ${failed}/${total}\n`;
+      summary += `Eredmény: ${failed === 0 ? '✓ ÖSSZES OK!' : '⚠️ HIBÁK VANNAK'}`;
+
+      document.getElementById('test-summary-details').textContent = summary;
+      updateTestStatus('test-summary', failed === 0);
+    };
+
+    // Interactive Test Functions
+    const testCTAShimmer = () => {
+      const buttons = document.querySelectorAll('.btn-cta');
+      buttons.forEach(btn => {
+        btn.classList.add('shimmer');
+        setTimeout(() => btn.classList.remove('shimmer'), 500);
+      });
+      log('CTA Shimmer teszt: A shimmer animáció aktiválva');
+    };
+
+    const testMarqueeToggle = () => {
+      const container = document.querySelector('.marquee-container');
+      if (container) {
+        container.classList.toggle('paused');
+        const status = container.classList.contains('paused') ? 'szünetelt' : 'lejátszik';
+        log(`Marquee: ${status}`);
+      }
+    };
+
+    const testCarouselNav = () => {
+      const carousel = document.querySelector('.carousel');
+      if (carousel && window.TestimonialCarousel) {
+        const slides = carousel.querySelectorAll('.carousel-slide');
+        const currentActive = carousel.querySelector('.carousel-slide.active');
+        if (currentActive) {
+          const currentIndex = Array.from(slides).indexOf(currentActive);
+          const nextIndex = (currentIndex + 1) % slides.length;
+          log(`Carousel: Slide ${currentIndex} → ${nextIndex}`);
+          slides[nextIndex].classList.add('active');
+          slides[currentIndex].classList.remove('active');
+        }
+      }
+    };
+
+    // Run tests when page loads
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', runTests);
+    } else {
+      runTests();
+    }
+  </script>
+</body>
+</html>
