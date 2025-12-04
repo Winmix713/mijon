@@ -1,0 +1,216 @@
+# Supabase Configuration
+# WinMix TipsterHub - Phases 3-9 Integrated Platform
+
+[project]
+# Project metadata
+db_url = "postgresql://[user]:[password]@[host]:5432/[database]"
+api_url = "http://localhost:54321"
+graphql_url = "http://localhost:54321/graphql/v1"
+s3_host = "http://localhost:54321"
+s3_region = "local"
+
+[auth]
+# Auth configuration
+enable_signup = true
+enable_email_confirmations = false
+enable_external_oauth_providers = false
+jwt_secret = "${JWT_SECRET}"
+jwt_expiry = 3600
+refresh_token_rotation_enabled = true
+refresh_token_reuse_interval = 10
+enable_refresh_token_rotation = true
+single_session = false
+mfa_phone_enabled = false
+mfa_totp_enabled = false
+whitelisted_redirect_urls = [
+  "http://localhost:5173",
+  "http://localhost:3000"
+]
+
+[database]
+# PostgreSQL configuration
+pooler_mode = "transaction"
+max_pool_size = 10
+
+[api]
+# API configuration
+max_body_size = 52428800
+enabled_log_http_header_names = []
+request_id_header = "X-Request-ID"
+request_id_header_length_limit = 256
+
+[realtime]
+# Realtime configuration
+enabled = true
+max_bytes_per_second = 1000000
+max_connections = 2000
+max_events_per_second = 100000
+
+[studio]
+# Supabase Studio configuration
+enabled = true
+
+[functions."get-predictions"]
+# Public function - read-only predictions access
+verify_jwt = false
+import_map = "./functions/import_map.json"
+
+[functions."analyze-match"]
+# Create predictions (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."jobs-create"]
+# Create scheduled job (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."jobs-delete"]
+# Delete scheduled job (Admin only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."jobs-list"]
+# List scheduled jobs (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."jobs-logs"]
+# Get job execution logs (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."jobs-scheduler"]
+# Execute scheduled job (Internal only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."jobs-toggle"]
+# Enable/disable scheduled job (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."jobs-trigger"]
+# Manually trigger scheduled job (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."jobs-update"]
+# Update scheduled job (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."submit-feedback"]
+# Submit prediction feedback/result (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."patterns-detect"]
+# Detect team patterns (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."patterns-verify"]
+# Verify team patterns (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."patterns-team"]
+# Get team pattern data (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."models-auto-prune"]
+# Auto-prune underperforming models (Admin only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."models-compare"]
+# Compare models (Admin only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."models-performance"]
+# Get model performance metrics (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."meta-patterns-apply"]
+# Apply meta-patterns (Admin only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."meta-patterns-discover"]
+# Discover meta-patterns (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."cross-league-analyze"]
+# Analyze cross-league data (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."cross-league-correlations"]
+# Get cross-league correlations (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."monitoring-health"]
+# Get system health metrics (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."monitoring-metrics"]
+# Get monitoring metrics (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."monitoring-alerts"]
+# Get monitoring alerts (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."monitoring-computation-graph"]
+# Get computation graph status (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."phase9-collaborative-intelligence"]
+# Phase 9 collaborative intelligence (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."phase9-market-integration"]
+# Phase 9 market integration (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."phase9-self-improving-system"]
+# Phase 9 self-improving system (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."phase9-temporal-decay"]
+# Phase 9 temporal decay (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."admin-import-env"]
+# Admin import environment (Admin only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."admin-import-matches-csv"]
+# Admin import matches from CSV (Admin only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."predictions-track"]
+# Track prediction execution (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[functions."predictions-update-results"]
+# Update prediction results (Admin/Analyst only)
+verify_jwt = true
+import_map = "./functions/import_map.json"

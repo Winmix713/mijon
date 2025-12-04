@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # PostgreSQL database for Supabase
+  postgres:
+    image: postgres:15-alpine
+    container_name: winmix-postgres
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_INITDB_ARGS: "-p 54322"
+    ports:
+      - "54322:54322"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -p 54322"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis cache (optional, for future caching)
+  redis:
+    image: redis:7-alpine
+    container_name: winmix-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Optional: pgAdmin for database management
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: winmix-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+  redis_data:
+
+# Usage:
+# docker-compose up -d      # Start all services in background
+# docker-compose down       # Stop all services
+# docker-compose logs -f    # View logs
