@@ -4,6 +4,45 @@ WinMix TipsterHub is an end-to-end football analytics and prediction platform th
 
 ---
 
+## 🔐 Authentication & Database Setup
+
+This project uses **Supabase** for authentication, authorization, and real-time data management. See the [SUPABASE_SETUP.md](./SUPABASE_SETUP.md) for detailed setup instructions.
+
+### Quick Start
+
+```bash
+# 1. Start local Supabase
+supabase start
+
+# 2. Copy environment variables
+cp .env.example .env.local
+# Edit .env.local with values from supabase start output
+
+# 3. Install and run dev server
+npm install
+npm run dev
+```
+
+### Key Features
+
+- **Role-Based Access Control (RBAC)**: Admin, Analyst, User, Viewer roles
+- **Row Level Security (RLS)**: Database-enforced access control
+- **JWT Enforcement**: Secure API endpoint protection
+- **Audit Logging**: Track all administrative actions
+- **Session Management**: Persistent login with automatic token refresh
+
+### User Roles
+
+| Role | Permissions | Access |
+|------|---|---|
+| **Admin** | Full system access | All features, user management, system config |
+| **Analyst** | Read/write predictions & analytics | Predictions, jobs, analytics, models |
+| **User** | Read-only access | View predictions, browse matches/teams/leagues |
+| **Viewer** | Limited read-only | Basic data browsing |
+| **Demo** | Limited demonstration access | Demo features with restrictions |
+
+---
+
 ## 🏗️ Platform Architecture
 
 | Layer | Technologies | Responsibilities |
