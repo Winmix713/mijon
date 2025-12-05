@@ -1,0 +1,151 @@
+{
+  "registry_version": "1.0.0",
+  "last_updated": "2025-01-01T00:00:00Z",
+  "models": [
+    {
+      "model_id": "logistic_regression_v1",
+      "name": "Logistic Regression Baseline",
+      "algorithm": "LogisticRegression",
+      "version": "1.0.0",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z",
+      "status": "active",
+      "description": "Initial logistic regression model for match outcome prediction",
+      "features": [
+        "home_team_form",
+        "away_team_form",
+        "home_team_strength",
+        "away_team_strength",
+        "home_advantage"
+      ],
+      "input_shape": [5],
+      "target": "fulltime_result",
+      "metrics": {
+        "accuracy": 0.72,
+        "precision": 0.75,
+        "recall": 0.70,
+        "f1_score": 0.72,
+        "auc_roc": 0.78
+      },
+      "hyperparameters": {
+        "learning_rate": 0.01,
+        "max_iterations": 1000,
+        "regularization": "l2",
+        "penalty": 1.0
+      },
+      "performance_history": [
+        {
+          "date": "2025-01-01T00:00:00Z",
+          "accuracy": 0.72,
+          "precision": 0.75,
+          "recall": 0.70,
+          "f1_score": 0.72
+        }
+      ],
+      "artifact_path": "models/logistic_regression_v1.pkl",
+      "ensemble_member": false,
+      "champion": true,
+      "challenger": false
+    },
+    {
+      "model_id": "random_forest_v1",
+      "name": "Random Forest Predictor",
+      "algorithm": "RandomForest",
+      "version": "1.0.0",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z",
+      "status": "candidate",
+      "description": "Random Forest ensemble model for improved prediction",
+      "features": [
+        "home_team_form",
+        "away_team_form",
+        "home_team_strength",
+        "away_team_strength",
+        "home_advantage",
+        "recent_goals_for",
+        "recent_goals_against"
+      ],
+      "input_shape": [7],
+      "target": "fulltime_result",
+      "metrics": {
+        "accuracy": 0.75,
+        "precision": 0.77,
+        "recall": 0.73,
+        "f1_score": 0.75,
+        "auc_roc": 0.81
+      },
+      "hyperparameters": {
+        "n_estimators": 100,
+        "max_depth": 10,
+        "min_samples_split": 5,
+        "min_samples_leaf": 2,
+        "random_state": 42
+      },
+      "performance_history": [
+        {
+          "date": "2025-01-01T00:00:00Z",
+          "accuracy": 0.75,
+          "precision": 0.77,
+          "recall": 0.73,
+          "f1_score": 0.75
+        }
+      ],
+      "artifact_path": "models/random_forest_v1.pkl",
+      "ensemble_member": true,
+      "champion": false,
+      "challenger": true
+    },
+    {
+      "model_id": "ensemble_v1",
+      "name": "Ensemble Predictor",
+      "algorithm": "EnsembleVoting",
+      "version": "1.0.0",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z",
+      "status": "experimental",
+      "description": "Voting ensemble combining multiple models",
+      "features": [
+        "home_team_form",
+        "away_team_form",
+        "home_team_strength",
+        "away_team_strength",
+        "home_advantage"
+      ],
+      "input_shape": [5],
+      "target": "fulltime_result",
+      "metrics": {
+        "accuracy": 0.76,
+        "precision": 0.78,
+        "recall": 0.74,
+        "f1_score": 0.76,
+        "auc_roc": 0.82
+      },
+      "hyperparameters": {
+        "voting": "soft",
+        "weights": [0.5, 0.5],
+        "estimators": ["logistic_regression_v1", "random_forest_v1"]
+      },
+      "performance_history": [
+        {
+          "date": "2025-01-01T00:00:00Z",
+          "accuracy": 0.76,
+          "precision": 0.78,
+          "recall": 0.74,
+          "f1_score": 0.76
+        }
+      ],
+      "artifact_path": "models/ensemble_v1.pkl",
+      "ensemble_member": false,
+      "champion": false,
+      "challenger": false
+    }
+  ],
+  "active_model_id": "logistic_regression_v1",
+  "champion_model_id": "logistic_regression_v1",
+  "challenger_model_id": "random_forest_v1",
+  "promotion_rules": {
+    "challenger_threshold": 0.03,
+    "min_evaluated_predictions": 100,
+    "evaluation_window_days": 7
+  }
+}

@@ -46,6 +46,28 @@ services:
     depends_on:
       - postgres
 
+  # ML Worker for training and inference
+  ml_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.ml
+    container_name: winmix-ml-worker
+    environment:
+      SUPABASE_URL: ${SUPABASE_URL:-http://localhost:54321}
+      SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    volumes:
+      - ./ml_pipeline:/app/ml_pipeline
+      - ./models:/app/models
+    depends_on:
+      - postgres
+      - redis
+    healthcheck:
+      test: ["CMD", "python", "-c", "print('healthy')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
 volumes:
   postgres_data:
   redis_data:
@@ -54,3 +76,4 @@ volumes:
 # docker-compose up -d      # Start all services in background
 # docker-compose down       # Stop all services
 # docker-compose logs -f    # View logs
+# docker-compose logs -f ml_worker  # View ML worker logs
