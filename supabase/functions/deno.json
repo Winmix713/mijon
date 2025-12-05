@@ -1,0 +1,18 @@
+{
+  "name": "winmix-tipsterhub-functions",
+  "version": "1.0.0",
+  "description": "Supabase Edge Functions for WinMix TipsterHub",
+  "scripts": {
+    "dev": "supabase functions serve",
+    "deploy": "supabase functions deploy",
+    "test": "deno test --allow-net --allow-env",
+    "test:watch": "deno test --allow-net --allow-env --watch"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/deno": "^2.0.0"
+  }
+}
