@@ -1,0 +1,98 @@
+meta:
+  domain: "football_prediction"
+  version: "1.0.0"
+  last_updated: "2025-01-01T00:00:00Z"
+  environment: "development"
+
+inference:
+  active_model_id: "logistic_regression_v1"
+  input_features:
+    - "home_team_form"
+    - "away_team_form"
+    - "home_team_strength"
+    - "away_team_strength"
+    - "home_advantage"
+  prediction_target: "fulltime_result"
+  min_confidence_threshold: 0.60
+  confidence_levels:
+    high: 0.80
+    medium: 0.65
+    low: 0.50
+
+training:
+  algorithm: "LogisticRegression"
+  data_source: "ml_pipeline/data/training_dataset.csv"
+  train_test_split: 0.8
+  validation_split: 0.1
+  random_state: 42
+  
+  hyperparameters:
+    learning_rate: 0.01
+    max_iterations: 1000
+    regularization: "l2"
+    penalty: 1.0
+  
+  preprocessing:
+    scaling: "StandardScaler"
+    feature_engineering: true
+    handle_missing: "mean"
+    outlier_detection: "iqr"
+
+evaluation:
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1_score"
+    - "auc_roc"
+    - "confusion_matrix"
+  
+  cross_validation:
+    enabled: true
+    n_folds: 5
+    stratified: true
+
+auto_reinforcement:
+  enabled: true
+  lookback_days: 7
+  min_error_samples: 10
+  error_confidence_threshold: 0.7
+  fine_tune_epochs: 5
+  fine_tune_learning_rate: 0.001
+
+decay_monitoring:
+  enabled: true
+  decay_threshold: 0.05
+  check_frequency_hours: 24
+  alert_recipients:
+    - "admin@winmix.local"
+
+ensemble:
+  enabled: true
+  method: "voting"
+  voting_type: "soft"
+  member_models:
+    - "logistic_regression_v1"
+    - "random_forest_v1"
+  weights: [0.5, 0.5]
+
+champion_challenger:
+  enabled: true
+  promotion_threshold: 0.03
+  min_evaluated_predictions: 100
+  evaluation_window_days: 7
+  auto_promote: false
+
+logging:
+  level: "INFO"
+  log_dir: "ml_pipeline/logs"
+  persist_to_supabase: true
+  evaluation_log_csv: true
+
+supabase:
+  url: "${SUPABASE_URL}"
+  service_key: "${SUPABASE_SERVICE_KEY}"
+  tables:
+    evaluation_log: "evaluation_log"
+    model_metrics: "model_metrics"
+    model_training_runs: "model_training_runs"

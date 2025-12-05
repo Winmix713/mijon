@@ -43,3 +43,25 @@ Thumbs.db
 # Testing
 coverage
 .nyc_output
+htmlcov/
+.pytest_cache
+.vitest
+
+# ML Pipeline
+ml_pipeline/logs/
+ml_pipeline/models/*.pkl
+ml_pipeline/data/*_predictions.csv
+venv/
+env/
+
+# Playwright
+playwright-report/
+test-results/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
